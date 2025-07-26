@@ -81,7 +81,7 @@ const Dashboard: React.FC = () => {
     // urlWithParams.searchParams.append("sessionId", userSession.sessionId);
     // urlWithParams.searchParams.append("mcpSessionId", userSession.mcpSessionId);
     fetch(
-      `http://127.0.0.1:8000/common/summary?userId=${userSession.userId}&sessionId=${userSession.sessionId}&mcpSessionId=${userSession.mcpSessionId}`
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/common/summary?userId=${userSession.userId}&sessionId=${userSession.sessionId}&mcpSessionId=${userSession.mcpSessionId}`
     )
       .then((res) => {
         if (!res.ok) throw new Error("Network response was not OK");

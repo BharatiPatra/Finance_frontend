@@ -36,13 +36,13 @@ export default function Login() {
       }
     }
     const mcpSessionId = "mcp-session-594e48ea-fea1-40ef-8c52-7552dd9272af";
-    const OAUTH_URL = `http://localhost:8080/mockWebPage?sessionId=${mcpSessionId}`;
+    const OAUTH_URL = `${process.env.NEXT_PUBLIC_MCP_SERVER_URL}/mockWebPage?sessionId=${mcpSessionId}`;
     const newWindow = window.open(OAUTH_URL, "loginPopup");
 
     const timer = setInterval(() => {
       // Do backend call to check if login successful.
       // If successful, redirect to dashboard
-      fetch("http://127.0.0.1:8000/security/login", {
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/security/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
