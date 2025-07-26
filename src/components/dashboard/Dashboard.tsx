@@ -7,8 +7,10 @@ import Modal from "@/components/common/Modal"; // Import the Modal component
 // import CardCollection from "@/components/cardAnimate/CardCollection";
 import CreditCardCollection from "../cardAnimate/CardCollection";
 import MutualFundTable from "./MutualfundTable";
-import {Summary} from "./types"
-import AssetLiabilityPieChart  from "./AssetLiability";
+import { Summary } from "./types";
+import AssetLiabilityPieChart from "./AssetLiability";
+import { useApiWithSession } from "../../hooks/useApiWithSession";
+import { useUserSession } from "../../contexts/UserSessionContext";
 
 // You would create these components as needed for other cards
 const TotalBalanceDetails: React.FC = () => (
@@ -61,22 +63,32 @@ const ExpensesDetails: React.FC = () => (
   </div>
 );
 
-
-
 const Dashboard: React.FC = () => {
   const [summary, setSummary] = useState<Summary | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeMetricId, setActiveMetricId] = useState<string | null>(null);
   const [modalTitle, setModalTitle] = useState<string>("");
+  const { userSession } = useUserSession();
+
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/common/summary")
+    // Only fetch if we have session data
+    if (!userSession.sessionId) {
+      return;
+    }
+    // const urlWithParams = new URL("http://127.0.0.1:8000/common/summary");
+    // urlWithParams.searchParams.append("userId", userSession.userId);
+    // urlWithParams.searchParams.append("sessionId", userSession.sessionId);
+    // urlWithParams.searchParams.append("mcpSessionId", userSession.mcpSessionId);
+    fetch(
+      `http://127.0.0.1:8000/common/summary?userId=${userSession.userId}&sessionId=${userSession.sessionId}&mcpSessionId=${userSession.mcpSessionId}`
+    )
       .then((res) => {
         if (!res.ok) throw new Error("Network response was not OK");
         return res.json();
       })
       .then((data: Summary) => setSummary(data))
       .catch((err) => console.error("Failed to load summary:", err));
-  }, []);
+  }, [userSession]);
 
   const openMetricModal = (id: string, title: string) => {
     setActiveMetricId(id);
@@ -149,9 +161,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <>
-      <h2 className="text-3xl font-bold mb-6 p-4 pl-4">
-        Dashboard Overview
-      </h2>
+      <h2 className="text-3xl font-bold mb-6 p-4 pl-4">Dashboard Overview</h2>
       {/* Grid for metric cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {metricData.map((m) => (
@@ -162,7 +172,7 @@ const Dashboard: React.FC = () => {
             value={m.value}
             // omit change/changeType if you don't have deltas
             icon={m.icon}
-            onClick={openMetricModal}
+            onClick={(id) => openMetricModal(id, m.title)}
           />
         ))}
       </div>
@@ -203,10 +213,8 @@ const Dashboard: React.FC = () => {
           />
         </div>
         <div className=" p-6 rounded-lg shadow-md">
-          <h1 className="text-2xl font-bold mb-4">
-            Mutual Fund Transactions
-          </h1>
-        <MutualFundTable data={summary?.mutual_fund} />
+          <h1 className="text-2xl font-bold mb-4">Mutual Fund Transactions</h1>
+          <MutualFundTable data={summary?.mutual_fund || []} />
         </div>
       </div>
       {/* The Modal Component */}
