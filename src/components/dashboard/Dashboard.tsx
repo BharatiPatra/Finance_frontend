@@ -4,13 +4,14 @@ import { useState, useEffect } from "react";
 import { Users, DollarSign, Activity, ArrowUpRight } from "lucide-react";
 import MetricCard from "@/components/dashboard/MetricCard";
 import Modal from "@/components/common/Modal"; // Import the Modal component
-// import CardCollection from "@/components/cardAnimate/CardCollection";
 import CreditCardCollection from "../cardAnimate/CardCollection";
 import MutualFundTable from "./MutualfundTable";
 import { Summary } from "./types";
 import AssetLiabilityPieChart from "./AssetLiability";
 import { useApiWithSession } from "../../hooks/useApiWithSession";
 import { useUserSession } from "../../contexts/UserSessionContext";
+import EpfBalanceTable from "./clickComponent/epfDetails";
+import MfCard from "./clickComponent/mfCard";
 
 // You would create these components as needed for other cards
 const TotalBalanceDetails: React.FC = () => (
@@ -102,17 +103,213 @@ const Dashboard: React.FC = () => {
     setModalTitle("");
   };
 
+  // Sample mutual fund data (you can replace this with actual data from API)
+  const sampleMutualFundData = [
+    {
+      isinNumber: "INF760K01FC4",
+      folioId: "55557777",
+      externalOrderType: "BUY",
+      transactionDate: "2022-12-31T18:30:00Z",
+      purchasePrice: {
+        currencyCode: "INR",
+        units: "66",
+        nanos: 554600000,
+      },
+      transactionAmount: {
+        currencyCode: "INR",
+        units: "6655",
+        nanos: 460000000,
+      },
+      transactionUnits: 100,
+      transactionMode: "N",
+      schemeName: "Canara Robeco Gilt Fund - Regular Plan",
+    },
+    {
+      isinNumber: "INF789FB1S71",
+      folioId: "7777711111",
+      externalOrderType: "BUY",
+      transactionDate: "2022-05-14T18:30:00Z",
+      purchasePrice: {
+        currencyCode: "INR",
+        units: "2923",
+        nanos: 506800000,
+      },
+      transactionAmount: {
+        currencyCode: "INR",
+        units: "29235",
+        nanos: 68000000,
+      },
+      transactionUnits: 10,
+      transactionMode: "N",
+      schemeName: "UTI Overnight - Direct Plan",
+    },
+    {
+      isinNumber: "INF109K012B0",
+      folioId: "222221111",
+      externalOrderType: "BUY",
+      transactionDate: "2022-05-10T18:30:00Z",
+      purchasePrice: {
+        currencyCode: "INR",
+        units: "52",
+        nanos: 720000000,
+      },
+      transactionAmount: {
+        currencyCode: "INR",
+        units: "2636",
+      },
+      transactionUnits: 50,
+      transactionMode: "N",
+      schemeName: "ICICI Prudential Balanced Advantage - Direct Plan",
+    },
+    {
+      isinNumber: "INF109K012M7",
+      folioId: "1234567",
+      externalOrderType: "BUY",
+      transactionDate: "2022-03-08T18:30:00Z",
+      purchasePrice: {
+        currencyCode: "INR",
+        units: "165",
+        nanos: 718700000,
+      },
+      transactionAmount: {
+        currencyCode: "INR",
+        units: "10027",
+      },
+      transactionUnits: 60.5063,
+      transactionMode: "N",
+      schemeName: "ICICI Prudential Nifty 50 Index Fund - Direct Plan Growth",
+    },
+  ];
+
+  // Sample credit card data
+  const sampleCreditCardData = [
+    {
+      subscriberName: "HDFC Bank",
+      portfolioType: "I",
+      accountType: "01",
+      openDate: "20060110",
+      highestCreditOrOriginalLoanAmount: "50000",
+      accountStatus: "83",
+      paymentRating: "5",
+      paymentHistoryProfile: "00??????????????????????????????????",
+      currentBalance: "5000",
+      amountPastDue: "1000",
+      dateReported: "20201228",
+      occupationCode: "S",
+      rateOfInterest: "11.5",
+      repaymentTenure: "0",
+      dateOfAddition: "20201028",
+      currencyCode: "INR",
+      accountHolderTypeCode: "1",
+    },
+    {
+      subscriberName: "ICICI Bank",
+      portfolioType: "I",
+      accountType: "03",
+      openDate: "20060122",
+      highestCreditOrOriginalLoanAmount: "110000",
+      accountStatus: "11",
+      paymentRating: "0",
+      paymentHistoryProfile: "44??????????????????????????????????",
+      currentBalance: "17000",
+      amountPastDue: "13000",
+      dateReported: "20201228",
+      occupationCode: "S",
+      rateOfInterest: "8.24",
+      repaymentTenure: "0",
+      dateOfAddition: "20201028",
+      currencyCode: "INR",
+      accountHolderTypeCode: "1",
+    },
+    {
+      subscriberName: "Aditya Brila Finance Limited",
+      portfolioType: "I",
+      accountType: "53",
+      openDate: "20060119",
+      highestCreditOrOriginalLoanAmount: "95000",
+      accountStatus: "78",
+      paymentRating: "2",
+      paymentHistoryProfile: "33??????????????????????????????????",
+      currentBalance: "14000",
+      amountPastDue: "10000",
+      dateReported: "20201228",
+      occupationCode: "N",
+      rateOfInterest: "14",
+      repaymentTenure: "0",
+      dateOfAddition: "20201028",
+      currencyCode: "INR",
+      accountHolderTypeCode: "1",
+    },
+    {
+      subscriberName: "Bajaj Finance",
+      portfolioType: "I",
+      accountType: "04",
+      openDate: "20060113",
+      highestCreditOrOriginalLoanAmount: "65000",
+      accountStatus: "11",
+      paymentRating: "0",
+      paymentHistoryProfile: "11??????????????????????????????????",
+      currentBalance: "8000",
+      amountPastDue: "0",
+      dateReported: "20201228",
+      occupationCode: "N",
+      repaymentTenure: "0",
+      dateOfAddition: "20201028",
+      currencyCode: "INR",
+      accountHolderTypeCode: "1",
+    },
+    {
+      subscriberName: "Epifi Capital",
+      portfolioType: "R",
+      accountType: "10",
+      openDate: "20060116",
+      creditLimitAmount: "500000",
+      highestCreditOrOriginalLoanAmount: "80000",
+      accountStatus: "82",
+      paymentRating: "4",
+      paymentHistoryProfile: "22??????????????????????????????????",
+      currentBalance: "11000",
+      amountPastDue: "7000",
+      dateReported: "20201228",
+      occupationCode: "N",
+      repaymentTenure: "0",
+      dateOfAddition: "20201028",
+      currencyCode: "INR",
+      accountHolderTypeCode: "1",
+    },
+    {
+      subscriberName: "Mannapuram Finance",
+      portfolioType: "I",
+      accountType: "06",
+      openDate: "20060125",
+      highestCreditOrOriginalLoanAmount: "125000",
+      accountStatus: "71",
+      paymentRating: "1",
+      paymentHistoryProfile: "55??????????????????????????????????",
+      currentBalance: "20000",
+      amountPastDue: "16000",
+      dateReported: "20201228",
+      occupationCode: "N",
+      repaymentTenure: "0",
+      dateOfAddition: "20201028",
+      currencyCode: "INR",
+      accountHolderTypeCode: "1",
+    },
+  ];
+
   // Function to render the correct component based on activeMetricId
   const renderMetricComponent = () => {
     switch (activeMetricId) {
       case "totalBalance":
         return <TotalBalanceDetails />;
       case "MutualFund":
-        return <MonthlyIncomeDetails />;
+        return <MfCard transactions={sampleMutualFundData} />;
       case "EPF":
-        return <ExpensesDetails />;
+        return <EpfBalanceTable />;
       case "creditCardSpending":
-        return <CreditCardCollection />; // Use the CardCollection component here
+        return (
+          <CreditCardCollection credit_card_accounts={sampleCreditCardData} />
+        );
       default:
         return (
           <p className="text-gray-600">

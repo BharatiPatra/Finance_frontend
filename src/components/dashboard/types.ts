@@ -23,11 +23,31 @@ export interface MetricCardProps {
 }
 
 export interface MutualFundTransaction {
-  date: string
-  schemeName: string
-  schemeType: string
-  type: string
-  price: number
+  date: string;
+  schemeName: string;
+  schemeType: string;
+  type: string;
+  price: number;
+}
+
+export interface MutualFundTransactionNew {
+  isinNumber: string;
+  folioId: string;
+  externalOrderType: string;
+  transactionDate: string;
+  purchasePrice: {
+    currencyCode: string;
+    units: string;
+    nanos?: number;
+  };
+  transactionAmount: {
+    currencyCode: string;
+    units: string;
+    nanos?: number;
+  };
+  transactionUnits: number;
+  transactionMode: string;
+  schemeName: string;
 }
 
 export interface Summary {
@@ -42,5 +62,5 @@ export interface Summary {
   };
   liabilities: Liability[];
   mutual_fund: MutualFundTransaction[];
+  transactions?: MutualFundTransactionNew[]; // New field for detailed transactions
 }
-

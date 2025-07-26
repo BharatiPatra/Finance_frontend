@@ -32,11 +32,11 @@ const Sidebar = () => {
           <Link
             key={link.href}
             href={link.href}
-            className={`flex items-center gap-3 py-2 px-3 rounded-lg transition-colors duration-200
+            className={`flex items-center gap-3 py-2 px-3 rounded-lg transition-colors duration-200 cursor-pointer
               ${
                 pathname === link.href
                   ? "bg-white text-black font-semibold shadow-sm "
-                  : "text-gray-300 hover:bg-gray-700 hover:text-white"
+                  : "text-gray-300 hover:bg-gray-700 hover:text-white cursor-pointer"
               }`}
           >
             {link.icon}
