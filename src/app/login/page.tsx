@@ -35,7 +35,7 @@ export default function Login() {
         }
       }
     }
-    const mcpSessionId = "mcp-session-sdf";
+    const mcpSessionId = "mcp-session-594e48ea-fea1-40ef-8c52-7552dd9272af";
     const OAUTH_URL = `http://localhost:8080/mockWebPage?sessionId=${mcpSessionId}`;
     const newWindow = window.open(OAUTH_URL, "loginPopup");
 
