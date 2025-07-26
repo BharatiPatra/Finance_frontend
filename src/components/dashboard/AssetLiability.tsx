@@ -1,3 +1,5 @@
+// components/dashboard/AssetLiabilityPieChart.tsx
+import React from "react";
 import {
   ResponsiveContainer,
   PieChart,
@@ -6,16 +8,14 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-
 import { AssetLiabilityChartProps } from "./types";
+import { Card } from "@/components/ui/card"; // Adjust the import path as necessary
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#A28FD0"];
 
-// Helper function to show percent labels
-const renderCustomLabel = (entry: any, index: number, data: any[]) => {
+const renderCustomLabel = (entry: any, _, data: any[]) => {
   const total = data.reduce((sum, item) => sum + item.value, 0);
-  const percent = ((entry.value / total) * 100).toFixed(1);
-  return `${percent}%`;
+  return `${((entry.value / total) * 100).toFixed(1)}%`;
 };
 
 export const AssetLiabilityPieChart: React.FC<AssetLiabilityChartProps> = ({
@@ -41,13 +41,16 @@ export const AssetLiabilityPieChart: React.FC<AssetLiabilityChartProps> = ({
   ];
 
   return (
-    <div className="flex justify-center items-center gap-16 py-6">
-      {/* Assets */}
-      <div className="flex flex-col items-center">
-        <h5 className="text-xl font-semibold text-gray-800 mb-4 text-center">
-          Assets Breakdown
+    <div className="flex justify-center items-start gap-16 py-6">
+      <Card
+        className="w-64  bg-gray-800 border border-cyan-400/50
+        rounded-lg
+        shadow-md"
+      >
+        <h5 className="text-xl font-semibold  text-center text-gray-200">
+          Assets
         </h5>
-        <ResponsiveContainer width={250} height={250}>
+        <ResponsiveContainer width="100%" height={200}>
           <PieChart>
             <Pie
               data={assetsData}
@@ -55,26 +58,29 @@ export const AssetLiabilityPieChart: React.FC<AssetLiabilityChartProps> = ({
               nameKey="name"
               cx="50%"
               cy="50%"
-              outerRadius={90}
+              outerRadius={80}
               label={(entry) => renderCustomLabel(entry, 0, assetsData)}
-              paddingAngle={5}
+              paddingAngle={4}
             >
               {assetsData.map((_, i) => (
                 <Cell key={i} fill={COLORS[i % COLORS.length]} />
               ))}
             </Pie>
-            <Tooltip formatter={(v: any) => v.toLocaleString()} />
+            <Tooltip formatter={(v: number) => v.toLocaleString()} />
             <Legend verticalAlign="bottom" height={36} />
           </PieChart>
         </ResponsiveContainer>
-      </div>
+      </Card>
 
-      {/* Liabilities */}
-      <div className="flex flex-col items-center">
-        <h5 className="text-xl font-semibold text-gray-800 mb-4 text-center">
-          Liabilities Breakdown
+      <Card
+        className="w-72 bg-gray-800 border border-cyan-400/50
+        rounded-lg
+        shadow-md"
+      >
+        <h5 className="text-xl font-semibold text-center text-gray-200">
+          Liabilities
         </h5>
-        <ResponsiveContainer width={250} height={250}>
+        <ResponsiveContainer width="100%" height={200}>
           <PieChart>
             <Pie
               data={liabilitiesData}
@@ -82,19 +88,19 @@ export const AssetLiabilityPieChart: React.FC<AssetLiabilityChartProps> = ({
               nameKey="name"
               cx="50%"
               cy="50%"
-              outerRadius={90}
+              outerRadius={80}
               label={(entry) => renderCustomLabel(entry, 0, liabilitiesData)}
-              paddingAngle={5}
+              paddingAngle={4}
             >
               {liabilitiesData.map((_, i) => (
                 <Cell key={i} fill={COLORS[i % COLORS.length]} />
               ))}
             </Pie>
-            <Tooltip formatter={(v: any) => v.toLocaleString()} />
+            <Tooltip formatter={(v: number) => v.toLocaleString()} />
             <Legend verticalAlign="bottom" height={36} />
           </PieChart>
         </ResponsiveContainer>
-      </div>
+      </Card>
     </div>
   );
 };

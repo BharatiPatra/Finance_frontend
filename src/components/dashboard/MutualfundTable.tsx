@@ -11,16 +11,18 @@ function truncateAfterSecondSpace(name: string): string {
 
 export default function MutualFundTable({ data }: { data: MutualFundTransaction[] }) {
   return (
-    <div className="container mx-auto py-10">
+    <div className="mt-10 container mx-auto p-2 bg-gray-800 border border-cyan-400/50
+        rounded-lg
+        shadow-md">
       <Table>
         <TableCaption>A list of your recent mutual fund transactions.</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[120px]">Date</TableHead>
-            <TableHead>Scheme Name</TableHead>
-            <TableHead>Scheme Type</TableHead>
-            <TableHead>Type</TableHead>
-            <TableHead className="text-right">Price</TableHead>
+            <TableHead className="w-[120px] text-gray-200">Date</TableHead>
+            <TableHead className="text-gray-200">Scheme Name</TableHead>
+            <TableHead className="text-gray-200">Scheme Type</TableHead>
+            <TableHead className="text-gray-200">Type</TableHead>
+            <TableHead className="text-right text-gray-200">Price</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

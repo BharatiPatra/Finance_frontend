@@ -26,7 +26,7 @@ const Sidebar = () => {
 
   return (
     // Sidebar container – background changed to bg-slate-900
-    <aside className="w-64 bg-slate-900 p-6 shadow-md hidden md:flex flex-col">
+    <aside className="w-64 bg-slate-800 p-6 shadow-md hidden md:flex flex-col">
       <nav className="flex-1 space-y-2">
         {navLinks.map((link) => (
           <Link

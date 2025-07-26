@@ -3,11 +3,12 @@ import type React from "react";
 import { useState, useEffect } from "react";
 import { Users, DollarSign, Activity, ArrowUpRight } from "lucide-react";
 import MetricCard from "@/components/dashboard/MetricCard";
-import AssetLiabilityPieChart from "@/components/dashboard/AssetLiability";
 import Modal from "@/components/common/Modal"; // Import the Modal component
-import CardCollection from "@/components/cardAnimate/CardCollection";
-import MutualFundTable from "@/components/dashboard/MutualfundTable";
+// import CardCollection from "@/components/cardAnimate/CardCollection";
+import CreditCardCollection from "../cardAnimate/CardCollection";
+import MutualFundTable from "./MutualfundTable";
 import {Summary} from "./types"
+import AssetLiabilityPieChart  from "./AssetLiability";
 
 // You would create these components as needed for other cards
 const TotalBalanceDetails: React.FC = () => (
@@ -99,7 +100,7 @@ const Dashboard: React.FC = () => {
       case "EPF":
         return <ExpensesDetails />;
       case "creditCardSpending":
-        return <CardCollection />; // Use the CardCollection component here
+        return <CreditCardCollection />; // Use the CardCollection component here
       default:
         return (
           <p className="text-gray-600">
@@ -148,7 +149,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <>
-      <h2 className="text-3xl font-bold text-gray-900 mb-6">
+      <h2 className="text-3xl font-bold mb-6 p-4 pl-4">
         Dashboard Overview
       </h2>
       {/* Grid for metric cards */}
@@ -167,8 +168,8 @@ const Dashboard: React.FC = () => {
       </div>
       {/* Grid for charts and tables */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">
+        <div className=" p-6 rounded-lg shadow-md">
+          <h1 className="text-2xl font-bold  mb-4">
             Assets and Liabilities Breakdown
           </h1>
           <AssetLiabilityPieChart
@@ -201,8 +202,8 @@ const Dashboard: React.FC = () => {
             }
           />
         </div>
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">
+        <div className=" p-6 rounded-lg shadow-md">
+          <h1 className="text-2xl font-bold mb-4">
             Mutual Fund Transactions
           </h1>
         <MutualFundTable data={summary?.mutual_fund} />

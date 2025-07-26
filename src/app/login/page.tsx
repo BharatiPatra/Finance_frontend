@@ -27,7 +27,7 @@ export default function Login() {
   if (session) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <p className="text-gray-600">Redirecting to dashboard...</p>
+        <p className="text-gray-200">Redirecting to dashboard...</p>
       </div>
     );
   }
@@ -41,14 +41,14 @@ export default function Login() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50">
-      <div className="w-full max-w-sm bg-white rounded-xl shadow-md p-6">
+    <div className="flex items-center justify-center min-h-screen">
+      <div className="w-full max-w-sm  rounded-xl shadow-md p-6">
         {/* Header */}
         <div className="mb-6 text-center">
-          <h1 className="text-2xl font-bold text-gray-800 mb-2">
+          <h1 className="text-2xl font-bold mb-2">
             Welcome to Fi MCP
           </h1>
-          <p className="text-md text-gray-600">
+          <p className="text-md">
             The AI Powered personal finance assistant
           </p>
         </div>
@@ -65,7 +65,7 @@ export default function Login() {
               type="email"
               autoComplete="email"
               required
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="mt-1 block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm placeholder-gray-700 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               placeholder="Email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -81,7 +81,7 @@ export default function Login() {
               type="password"
               autoComplete="current-password"
               required
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="mt-1 block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm placeholder-gray-700 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -97,7 +97,7 @@ export default function Login() {
 
         {/* OR Separator */}
         <div className="relative flex justify-center text-sm mb-6">
-          <span className="bg-white px-2 text-gray-500">Or continue with</span>
+          <span className=" px-2 text-gray-200">Or continue with</span>
           <div className="absolute inset-x-0 top-1/2 h-px bg-gray-200 -z-10"></div>
         </div>
 
@@ -106,7 +106,7 @@ export default function Login() {
           <button
             onClick={() => signIn("google")}
             type="button"
-            className="w-full flex justify-center items-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition"
+            className="w-full flex justify-center items-center py-2 px-4 border border-gray-600 rounded-lg shadow-sm text-sm font-medium  transition"
           >
             <svg
               className="w-5 h-5 mr-2"

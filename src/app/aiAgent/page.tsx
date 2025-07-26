@@ -50,7 +50,7 @@ const AiAgent: React.FC = () => {
 
   return (
     <div className="p-6 h-full flex flex-col">
-      <div className="flex-1 bg-gray-50 rounded-lg p-4 overflow-y-auto mb-4 shadow-inner">
+      <div className="flex-1  rounded-lg p-4 overflow-y-auto mb-4 shadow-inner">
         {messages.map((msg, index) => (
           <div
             key={index}
@@ -59,7 +59,7 @@ const AiAgent: React.FC = () => {
             <div
               className={`max-w-3/4 p-3 rounded-xl shadow-sm ${
                 msg.type === 'user'
-                  ? 'bg-slate-900 text-white rounded-br-none'
+                  ? 'bg-gray-900 text-white rounded-br-none'
                   : 'bg-gray-200 text-gray-800 rounded-bl-none'
               }`}
             >

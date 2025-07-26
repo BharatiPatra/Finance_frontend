@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import "tw-animate-css";
+@import "tw-animate-css"; /* Note: This might need to be 'tailwindcss-animate' if 'tw-animate-css' is not a custom plugin. */
 
 @custom-variant dark (&:is(.dark *));
 
@@ -74,14 +74,17 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-  --background: linear-gradient(135deg,oklch(0.12 0.05 250) 0%,oklch(0.08 0.07 260) 50%,oklch(0.10 0.05 240) 100%);
+  --background: linear-gradient(135deg, oklch(0.12 0.05 250) 0%, oklch(0.08 0.07 260) 50%, oklch(0.1 0.05 240) 100%);
   --foreground: oklch(0.145 0 0);
 }
 
 .dark {
-  --background:var(--background);
-  --background-attachment:fixed;
-  --background-size:
+  /* Note: --background:var(--background); and --background-size: are potentially problematic. */
+  /* The --background variable in .dark should define its own value, not reference itself. */
+  /* --background-size: is incomplete. */
+  --background: linear-gradient(135deg, oklch(0.08 0.07 260) 0%, oklch(0.12 0.05 250) 100%);
+  --background-attachment: fixed;
+  --background-size: ;
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
@@ -116,7 +119,7 @@
 
 .scroll-hidden {
   scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none;  /* IE/Edge */
+  -ms-overflow-style: none; /* IE/Edge */
 }
 
 .scroll-hidden::-webkit-scrollbar {
@@ -131,8 +134,7 @@
     @apply bg-background text-foreground;
   }
 }
+
 /* Custom Keyframe Animations for card swipe */
-
 /* React Transition Group Classes for card swipe */
-
 /* When a card is entering the DOM */
