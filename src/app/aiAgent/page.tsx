@@ -85,19 +85,20 @@ const AiAgent: React.FC = () => {
     setSelectedFiles([]);
     setLoading(true);
 
+    const formData = new FormData();
+    if (selectedFiles.length > 0) {
+      formData.append("file", selectedFiles[0].file);
+    }
+    formData.append("user_id", userSession.userId as string);
+    formData.append("session_id", userSession.sessionId as string);
+    formData.append("message", userMessage.text);
+
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/agent/query`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            user_id: userSession.userId,
-            session_id: userSession.sessionId,
-            message: userMessage.text,
-          }),
+          body: formData,
         }
       );
 
@@ -175,7 +176,7 @@ const AiAgent: React.FC = () => {
         <input
           ref={fileInputRef}
           type="file"
-          multiple
+          multiple={false}
           accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png,.gif,.bmp,.webp"
           onChange={handleFileSelect}
           className="hidden"
@@ -185,7 +186,6 @@ const AiAgent: React.FC = () => {
           {/* Selected Files Display inside input */}
           {selectedFiles.length > 0 && (
             <div className="absolute top-0 left-0 right-0 bg-gray-900 border border-gray-300 border-b-0 p-2 z-0">
-              {" "}
               <div className="flex flex-wrap gap-1">
                 {selectedFiles.map((selectedFile, index) => (
                   <div
