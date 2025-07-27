@@ -13,16 +13,17 @@ import { Card } from "@/components/ui/card"; // Adjust the import path as necess
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#A28FD0"];
 
-// Custom label component with better positioning
+// Custom label component to show percentage outside pie chart with lines
 const CustomLabel = (props: any) => {
   const { cx, cy, midAngle, innerRadius, outerRadius, percent } = props;
   const RADIAN = Math.PI / 180;
-  const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+  // Position labels outside the pie chart
+  const radius = outerRadius + 25;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
   // Only show percentage if significant
-  if (percent * 100 < 5) return null;
+  if (percent * 100 < 2) return null;
 
   return (
     <text
@@ -31,11 +32,35 @@ const CustomLabel = (props: any) => {
       fill="white"
       textAnchor={x > cx ? "start" : "end"}
       dominantBaseline="central"
-      fontSize="12"
+      fontSize="11"
       fontWeight="bold"
     >
       {`${(percent * 100).toFixed(1)}%`}
     </text>
+  );
+};
+
+// Custom legend component with category names only
+const CustomLegend = (props: any) => {
+  const { payload } = props;
+  if (!payload || !payload.length) return null;
+
+  return (
+    <div className="flex flex-wrap justify-center items-center gap-3 mt-4 px-2">
+      {payload.map((entry: any, index: number) => {
+        return (
+          <div key={index} className="flex items-center gap-1.5 text-xs">
+            <div
+              className="w-2.5 h-2.5 rounded-full"
+              style={{ backgroundColor: entry.color }}
+            ></div>
+            <span className="text-gray-300 whitespace-nowrap">
+              {entry.value}
+            </span>
+          </div>
+        );
+      })}
+    </div>
   );
 };
 
@@ -71,17 +96,22 @@ export const AssetLiabilityPieChart: React.FC<AssetLiabilityChartProps> = ({
         <h5 className="text-xl font-semibold  text-center text-gray-200">
           Assets
         </h5>
-        <ResponsiveContainer width="100%" height={200}>
+        <ResponsiveContainer width="100%" height={320}>
           <PieChart>
             <Pie
               data={assetsData}
               dataKey="value"
               nameKey="name"
               cx="50%"
-              cy="50%"
-              outerRadius={80}
+              cy="45%"
+              outerRadius={70}
               label={CustomLabel}
-              paddingAngle={4}
+              labelLine={{
+                stroke: "#9CA3AF",
+                strokeWidth: 1,
+                strokeDasharray: "2 2",
+              }}
+              paddingAngle={2}
             >
               {assetsData.map((_, i) => (
                 <Cell key={i} fill={COLORS[i % COLORS.length]} />
@@ -91,7 +121,7 @@ export const AssetLiabilityPieChart: React.FC<AssetLiabilityChartProps> = ({
               formatter={(v: number) => [`₹${v.toLocaleString()}`, "Value"]}
               labelFormatter={(label) => `${label}`}
             />
-            <Legend verticalAlign="bottom" height={36} />
+            <Legend verticalAlign="bottom" height={60} content={CustomLegend} />
           </PieChart>
         </ResponsiveContainer>
       </Card>
@@ -104,17 +134,22 @@ export const AssetLiabilityPieChart: React.FC<AssetLiabilityChartProps> = ({
         <h5 className="text-xl font-semibold text-center text-gray-200">
           Liabilities
         </h5>
-        <ResponsiveContainer width="100%" height={200}>
+        <ResponsiveContainer width="100%" height={320}>
           <PieChart>
             <Pie
               data={liabilitiesData}
               dataKey="value"
               nameKey="name"
               cx="50%"
-              cy="50%"
-              outerRadius={80}
+              cy="45%"
+              outerRadius={70}
               label={CustomLabel}
-              paddingAngle={4}
+              labelLine={{
+                stroke: "#9CA3AF",
+                strokeWidth: 1,
+                strokeDasharray: "2 2",
+              }}
+              paddingAngle={2}
             >
               {liabilitiesData.map((_, i) => (
                 <Cell key={i} fill={COLORS[i % COLORS.length]} />
@@ -124,7 +159,7 @@ export const AssetLiabilityPieChart: React.FC<AssetLiabilityChartProps> = ({
               formatter={(v: number) => [`₹${v.toLocaleString()}`, "Value"]}
               labelFormatter={(label) => `${label}`}
             />
-            <Legend verticalAlign="bottom" height={36} />
+            <Legend verticalAlign="bottom" height={60} content={CustomLegend} />
           </PieChart>
         </ResponsiveContainer>
       </Card>

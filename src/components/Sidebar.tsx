@@ -18,10 +18,21 @@ const Sidebar = () => {
   const navLinks = [
     { href: "/", icon: <Home size={18} />, label: "Home" },
     { href: "/aiAgent", icon: <Zap size={18} />, label: "Ask AI" },
-    { href: "/investment", icon: <BarChart3 size={18} />, label: "Investment" },
-    { href: "/reports", icon: <ClipboardList size={18} />, label: "Reports" },
-    { href: "/alert", icon: <AlertCircle size={18} />, label: "Alerts" },
-    { href: "/socialAndCopy", icon: <Users2 size={18} />, label: "Social" },
+    {
+      href: "/investment",
+      icon: <BarChart3 size={18} />,
+      label: "Investment(coming soon)",
+    },
+    {
+      href: "/reports",
+      icon: <ClipboardList size={18} />,
+      label: "Reports(coming soon)",
+    },
+    {
+      href: "/alert",
+      icon: <AlertCircle size={18} />,
+      label: "Alerts(coming soon)",
+    },
   ];
 
   return (

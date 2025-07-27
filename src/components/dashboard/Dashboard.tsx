@@ -12,6 +12,7 @@ import { useApiWithSession } from "../../hooks/useApiWithSession";
 import { useUserSession } from "../../contexts/UserSessionContext";
 import EpfBalanceTable from "./clickComponent/epfDetails";
 import MfCard from "./clickComponent/mfCard";
+import NetWorthDetails from "./clickComponent/netWorthDetails";
 
 // You would create these components as needed for other cards
 const TotalBalanceDetails: React.FC = () => (
@@ -301,9 +302,9 @@ const Dashboard: React.FC = () => {
   const renderMetricComponent = () => {
     switch (activeMetricId) {
       case "totalBalance":
-        return <TotalBalanceDetails />;
+        return <NetWorthDetails />;
       case "MutualFund":
-        return <MfCard transactions={sampleMutualFundData} />;
+        return <MfCard />;
       case "EPF":
         return <EpfBalanceTable />;
       case "creditCardSpending":
