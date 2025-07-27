@@ -113,6 +113,21 @@ const AiAgent: React.FC = () => {
     }
   };
 
+  const ThinkingAnimation = () => (
+    <div className="flex justify-start mb-4">
+      <div className="bg-gray-900 text-white p-3 rounded-xl rounded-bl-none">
+        <div className="flex items-center space-x-1">
+          <span className="text-gray-400 mr-2">Thinking</span>
+          <div className="flex space-x-1">
+            <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+            <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+            <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="p-6 h-full flex flex-col">
       <div className="flex-1  rounded-lg p-4 overflow-y-auto mb-4 shadow-inner">
@@ -169,7 +184,7 @@ const AiAgent: React.FC = () => {
             </div>
           </div>
         ))}
-        {loading && <Loader2 className="h-8 w-8 animate-spin" />}
+        {loading && <ThinkingAnimation />}
       </div>
       <div className="flex items-center gap-2">
         {/* Hidden file input */}
